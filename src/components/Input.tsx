@@ -23,7 +23,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
             {...props}
             id={props.name}
             ref={ref}
-            className="block w-full rounded-md border-gray-300 px-4 py-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="block w-full rounded-md border-gray-300 p-2 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
         </div>
         {state.error && (
