@@ -1,3 +1,12 @@
+import { MentionsGeneratorForm } from '@/components/MentionsGeneratorForm'
+
 export default function Home() {
-  return <div className="bg-red-500"></div>
+  return (
+    <div className="container mx-auto mt-16">
+      <h1 className="mb-8 text-4xl font-semibold text-gray-700">
+        Générateur de mentions légales
+      </h1>
+      <MentionsGeneratorForm />
+    </div>
+  )
 }
