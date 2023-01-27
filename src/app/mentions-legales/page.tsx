@@ -1,6 +1,6 @@
 const MentionsLegalesPage = () => {
   return (
-    <div className="p-8 space-y-2">
+    <div className="space-y-2 p-8">
       <div>
         Ce site est édité par Monsieur Adrien BLANC, résidant 23 avenue de la
         Chapellerie, 94370 Sucy-en-Brie.
