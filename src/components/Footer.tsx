@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 export const Footer = () => (
-  <section className="flex h-20 w-full flex-col items-center justify-center text-sm">
+  <section className="flex h-20 w-full flex-col items-center justify-center space-y-1 text-center text-sm">
     <div>
       Développé par{' '}
       <a
@@ -13,8 +13,18 @@ export const Footer = () => (
         Adrien Blanc
       </a>
     </div>
-    <Link href="/mentions-legales" className="hover:underline">
-      Mentions légales
-    </Link>
+    <div>
+      <Link href="/mentions-legales" className="hover:underline">
+        Mentions légales
+      </Link>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="https://github.com/adblanc/legal-mentions-generator"
+        className="block hover:underline"
+      >
+        Github
+      </a>
+    </div>
   </section>
 )
