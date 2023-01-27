@@ -6,15 +6,17 @@ import Form from './Form'
 import { Input } from './Input'
 import clsx from 'clsx'
 import { UseFormReturn } from 'react-hook-form'
+import { CopyIcon } from './CopyIcon'
+import { useState } from 'react'
 
 const schema = z.object({
-  lastName: z.string(),
-  firstName: z.string(),
+  lastName: z.string().min(1),
+  firstName: z.string().min(1),
   email: z.string().email(),
-  phoneNumber: z.string(),
-  address: z.string(),
-  city: z.string(),
-  postalCode: z.string(),
+  phoneNumber: z.string().min(1),
+  address: z.string().min(1),
+  city: z.string().min(1),
+  postalCode: z.string().min(1),
 })
 
 export const MentionsGeneratorForm = () => {
@@ -25,7 +27,7 @@ export const MentionsGeneratorForm = () => {
   const { isValid } = form.formState
 
   return (
-    <section className="flex flex-row rounded-lg border border-gray-300 p-16">
+    <section className="flex flex-row rounded-lg  p-16 shadow-2xl">
       <Form
         form={form}
         onSubmit={() => {}}
@@ -81,21 +83,58 @@ const FormResult = ({
     phoneNumber = 'NUMERO DE TELEPHONE',
     email = 'EMAIL',
   } = form.watch()
+
+  const lines = [
+    `Ce site est édité par ${firstName} ${lastName}, résidant ${address}, ${postalCode} ${city}.`,
+    `Téléphone : ${phoneNumber}.`,
+    `Courrier électronique : ${email}.`,
+    `Le directeur de la publication est ${firstName} ${lastName}.`,
+    `Ce site est hébergé par la société Vercel Inc., située 340 S Lemon Ave
+  #4133 Walnut, CA 91789, et joignable au (559) 288-7060`,
+  ]
+
   return (
-    <div className="h-full flex-1 space-y-4 pl-16">
-      <div>
-        Ce site est édité par {firstName} {lastName}, résidant {address},{' '}
-        {postalCode} {city}.
+    <div className="h-full flex-1 pl-16">
+      <div className="mb-8 space-y-4">
+        {lines.map((line) => (
+          <div key={line}>{line}</div>
+        ))}
       </div>
-      <div>Téléphone : {phoneNumber}.</div>
-      <div>Courrier électronique : {email}.</div>
-      <div>
-        Le directeur de la publication est {firstName} {lastName}.
-      </div>
-      <div>
-        Ce site est hébergé par la société Vercel Inc., située 340 S Lemon Ave
-        #4133 Walnut, CA 91789, et joignable au (559) 288-7060
-      </div>
+      <CopyTextButton
+        text={lines.join('\n\n')}
+        disabled={!form.formState.isValid}
+      />
     </div>
+  )
+}
+
+interface CopyTextButtonProps {
+  text: string
+  disabled?: boolean
+}
+
+const CopyTextButton = ({ text, disabled }: CopyTextButtonProps) => {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    setTimeout(() => setCopied(false), 2000)
+    setCopied(true)
+    navigator.clipboard.writeText(text)
+  }
+
+  return (
+    <button
+      disabled={disabled}
+      onClick={handleCopy}
+      className={clsx(
+        'flex w-32 flex-row items-center justify-center rounded-lg bg-indigo-500 px-4 py-2 font-medium text-white shadow-md',
+        {
+          'bg-opacity-50': disabled,
+        }
+      )}
+    >
+      {!copied ? <CopyIcon /> : null}
+      <div className="ml-2">{!copied ? 'Copier' : 'Copié !'}</div>
+    </button>
   )
 }
